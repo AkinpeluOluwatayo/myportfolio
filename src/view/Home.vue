@@ -65,20 +65,42 @@ onMounted(() => {
   tl.from(".reveal", { y: 50, opacity: 0, stagger: 0.1, duration: 1, ease: "power4.out" })
   tl.from(".music-ctrl", { x: -20, opacity: 0, duration: 0.8, ease: "back.out(1.7)" }, "-=0.5")
 
-  gsap.utils.toArray('.project-card').forEach((card, i) => {
-    gsap.from(card, {
+  // Animation for project cards and architecture cards
+  gsap.utils.toArray('.scroll-reveal').forEach((el) => {
+    gsap.from(el, {
       y: 60,
       opacity: 0,
       duration: 1,
       ease: "power3.out",
       scrollTrigger: {
-        trigger: card,
+        trigger: el,
         start: "top 85%",
         toggleActions: "play none none none"
       }
     })
   })
 })
+
+const architecture = [
+  {
+    title: "BFF Pattern",
+    subtitle: "Backend-for-Frontend",
+    desc: "Optimizing data delivery by creating tailored API layers for specific user interfaces, reducing over-fetching.",
+    icon: "solar:layers-minimalistic-bold-duotone"
+  },
+  {
+    title: "Modular Monolith",
+    subtitle: "Scalable Structure",
+    desc: "Designing systems with highly decoupled modules that balance the simplicity of monoliths with the flexibility of microservices.",
+    icon: "solar:widget-add-bold-duotone"
+  },
+  {
+    title: "SSR & SEO",
+    subtitle: "Performance First",
+    desc: "Implementing Server-Side Rendering (SSR) to ensure lightning-fast initial loads and maximum search engine visibility.",
+    icon: "solar:graph-up-bold-duotone"
+  }
+]
 
 const projects = [
   {
@@ -210,6 +232,24 @@ const socials = [
       </div>
     </section>
 
+    <section class="py-20 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
+      <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+        <div>
+          <h2 class="text-4xl md:text-6xl font-black italic uppercase tracking-tighter leading-none">Core <span class="text-emerald-500">Architecture</span></h2>
+          <p class="text-stone-500 font-mono text-[10px] uppercase mt-4 tracking-[0.4em]">Foundational Strategies & Performance Design</p>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div v-for="item in architecture" :key="item.title" class="scroll-reveal bg-stone-900/20 border border-white/5 p-8 rounded-[2rem] hover:bg-stone-900/40 hover:border-emerald-500/20 transition-all group">
+          <Icon :icon="item.icon" class="text-4xl text-emerald-500 mb-6 group-hover:scale-110 transition-transform" />
+          <h4 class="text-stone-400 text-[10px] font-black uppercase tracking-widest mb-2">{{ item.subtitle }}</h4>
+          <h3 class="text-2xl font-black uppercase italic mb-4">{{ item.title }}</h3>
+          <p class="text-stone-500 text-sm leading-relaxed">{{ item.desc }}</p>
+        </div>
+      </div>
+    </section>
+
     <section id="projects" class="py-20 px-6 md:px-12 lg:px-20 max-w-7xl mx-auto">
       <div class="mb-16">
         <h2 class="text-5xl md:text-8xl font-black italic uppercase tracking-tighter leading-none">Selected<br/><span class="text-emerald-500">Works</span></h2>
@@ -218,7 +258,7 @@ const socials = [
 
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8 lg:gap-12">
         <div v-for="(project, index) in projects" :key="index"
-             class="project-card group bg-stone-900/30 rounded-[2.5rem] border border-white/5 flex flex-col hover:border-emerald-500/40 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
+             class="scroll-reveal project-card group bg-stone-900/30 rounded-[2.5rem] border border-white/5 flex flex-col hover:border-emerald-500/40 hover:-translate-y-2 transition-all duration-500 overflow-hidden">
 
           <div class="relative w-full aspect-video overflow-hidden bg-stone-950 border-b border-white/5">
             <img :src="project.img" :alt="project.title" class="w-full h-full object-cover object-top transition-all duration-700 group-hover:scale-105" />
